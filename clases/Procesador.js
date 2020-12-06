@@ -1,6 +1,6 @@
-const Proceso = require('./proceso.js');
+const Proceso = require('./Proceso.js');
 let Procesador = (function () {
-    let inicio = null;
+    let inicial = null;
     var NumeroT = 1;
     var ciclosV = 0;
     var procesosC = 0;
@@ -13,16 +13,16 @@ let Procesador = (function () {
                 NumeroT++;
                 procesosP++;
             }
-            if (inicio != null) {
-                if (inicio.ciclosR == 0) {
-                    eliminar(inicio);
+            if (inicial != null) {
+                if (inicial.ciclosR == 0) {
+                    eliminar(inicial);
                     procesosC++;
                     procesosP--;
                 }
-                inicio.ciclosR--;
-                inicio = inicio.siguiente;
+                inicial.ciclosR--;
+                inicial = inicial.siguiente;
             }
-            if (inicio == null) {
+            if (inicial == null) {
                 ciclosV++;
             }
             mostrar();
@@ -32,26 +32,26 @@ let Procesador = (function () {
         console.log(`Ciclos vacíos: ${ciclosV}\nProcesos realizados: ${procesosC}\nProcesos pendientes: ${procesosP}\n`);
     }
     const agregar = (proceso) => {
-        if (inicio == null) {
-            inicio = proceso;
-            inicio.siguiente = inicio;
-            inicio.anterior = inicio;
+        if (inicial == null) {
+            inicial = proceso;
+            inicial.siguiente = inicial;
+            inicial.anterior = inicial;
         } else {
-            let aux = inicio;
-            while (aux.siguiente != inicio) {
+            let aux = inicial;
+            while (aux.siguiente != inicial) {
                 aux = aux.siguiente;
             }
             aux.siguiente = proceso;
             aux.siguiente.anterior = aux;
-            aux.siguiente.siguiente = inicio;
-            inicio.anterior = proceso;
+            aux.siguiente.siguiente = inicial;
+            inicial.anterior = proceso;
         }
         return proceso;
     }
     const buscar = (proceso) => {
-        let aux = inicio;
+        let aux = inicial;
         if (aux != null) {
-            while (aux != proceso && aux.siguiente != inicio) {
+            while (aux != proceso && aux.siguiente != inicial) {
                 aux = aux.siguiente;
             }
             if (aux == proceso) {
@@ -62,15 +62,15 @@ let Procesador = (function () {
         }
     }
     const eliminar = (proceso) => {
-        if (proceso == inicio && inicio.anterior == inicio && inicio.siguiente == inicio) {
-            inicio = null;
-        } else if (inicio == proceso) {
-            inicio.siguiente.anterior = inicio.anterior;
-            inicio.anterior.siguiente = inicio.siguiente;
-            inicio = inicio.siguiente;
+        if (proceso == inicial && inicial.anterior == inicial && inicial.siguiente == inicial) {
+            inicial = null;
+        } else if (inicial == proceso) {
+            inicial.siguiente.anterior = inicial.anterior;
+            inicial.anterior.siguiente = inicial.siguiente;
+            inicial = inicial.siguiente;
         } else {
-            let aux = inicio;
-            while (aux.siguiente != proceso && aux.siguiente != inicio) {
+            let aux = inicial;
+            while (aux.siguiente != proceso && aux.siguiente != inicial) {
                 aux = aux.siguiente;
             }
             if (aux.siguiente == proceso) {
